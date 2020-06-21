@@ -1,4 +1,4 @@
-package xbl
+package xbliveapi
 
 import "net/url"
 

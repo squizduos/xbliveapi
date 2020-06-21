@@ -1,7 +1,8 @@
-package xbl
+package xbliveapi
 
 import (
 	"bytes"
+	"crypto/tls"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -14,8 +15,8 @@ import (
 	"time"
 )
 
-// Login logs into the Microsoft Live API, returning a client with a
-// fresh access token.
+// Login authorizing into the Microsoft Live API.
+// Returning a client with a fresh access token.
 func Login(username, password string) (*Client, error) {
 	c, err := loginHTTPClient()
 	if err != nil {
@@ -46,32 +47,24 @@ func Login(username, password string) (*Client, error) {
 	}, nil
 }
 
-type credentials struct {
-	token        string
-	uhs          string
-	xid          string
-	gamertag     string
-	accessToken  string
-	refreshToken string
-	userID       string
-	expiresAt    time.Time
-}
-
-func (c *credentials) authHeader() string {
-	return fmt.Sprintf("XBL3.0 x=%s;%s", c.uhs, c.token)
-}
-
 func loginHTTPClient() (*http.Client, error) {
 	jar, err := cookiejar.New(nil)
 	if err != nil {
 		return nil, err
 	}
 
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{
+			Renegotiation:      tls.RenegotiateOnceAsClient,
+			InsecureSkipVerify: true},
+	}
+
 	return &http.Client{
 		CheckRedirect: func(req *http.Request, via []*http.Request) error {
 			return http.ErrUseLastResponse // never follow redirects
 		},
-		Jar: jar,
+		Jar:       jar,
+		Transport: tr,
 	}, nil
 }
 
@@ -80,7 +73,7 @@ var authorizeURLRegexp = regexp.MustCompile("urlPost:'([^']+)'")
 
 func oauthAuthorizeURL(c *http.Client) (string, string, error) {
 	var defaultOauthAuthorizeRequest = url.Values{
-		"client_id":     {"0000000048093EE3"},
+		"client_id":     clientID,
 		"redirect_uri":  {"https://login.live.com/oauth20_desktop.srf"},
 		"response_type": {"token"},
 		"display":       {"touch"},

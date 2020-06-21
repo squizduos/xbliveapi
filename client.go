@@ -1,4 +1,4 @@
-package xbl
+package xbliveapi
 
 import (
 	"bytes"
@@ -7,8 +7,6 @@ import (
 	"strconv"
 	"time"
 )
-
-const userAgent = "SmartGlass/com.microsoft.smartglass (1610.1205.1554; OS Version 10.1.1 (Build 14B100))"
 
 // Client encapsulates the entire Xbox Live API and a set
 // of credentials to access the API.
