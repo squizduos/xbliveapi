@@ -73,7 +73,7 @@ var authorizeURLRegexp = regexp.MustCompile("urlPost:'([^']+)'")
 
 func oauthAuthorizeURL(c *http.Client) (string, string, error) {
 	var defaultOauthAuthorizeRequest = url.Values{
-		"client_id":     clientID,
+		"client_id":     {clientID},
 		"redirect_uri":  {"https://login.live.com/oauth20_desktop.srf"},
 		"response_type": {"token"},
 		"display":       {"touch"},

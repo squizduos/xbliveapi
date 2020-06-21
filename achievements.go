@@ -27,8 +27,8 @@ type Achievement struct {
 
 // Rarity describes the rarity of a particular achievement.
 type Rarity struct {
-	CurrentCategory   string `json:"currentCategory"`
-	CurrentPercentage int    `json:"currentPercentage"`
+	CurrentCategory   string  `json:"currentCategory"`
+	CurrentPercentage float64 `json:"currentPercentage"`
 }
 
 type achievementsResponse struct {
