@@ -61,7 +61,7 @@ type pagingInfo struct {
 }
 
 // GameDVRs retrieves all game clips for the provided user XID.
-func (c *Client) GameDVRs(xid string) ([]Achievement, error) {
+func (c *Client) GameDVRs(xid string) ([]GameDVR, error) {
 	queryParams := url.Values{"maxItems": {"1000"}, "orderBy": {"EndingSoon"}}
 	u := url.URL{
 		Scheme:   "https",
