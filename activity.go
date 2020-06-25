@@ -4,9 +4,10 @@ import "net/url"
 
 // ActivityStatus describes the current status of a Xbox LIVE gamertag.
 type ActivityStatus struct {
-	XUID    string           `json:"xuid"`
-	State   string           `json:"state"`
-	Devices []DeviceActivity `json:"devices,omitempty"`
+	XUID     string            `json:"xuid"`
+	State    string            `json:"state"`
+	Devices  []DeviceActivity  `json:"devices,omitempty"`
+	LastSeen *LastSeenActivity `json:"lastSeen"`
 }
 
 type DeviceActivity struct {
@@ -20,6 +21,13 @@ type TitleActivity struct {
 	Placement    string `json:"placement"`
 	State        string `json:"state"`
 	LastModified string `json:"lastModified"`
+}
+
+type LastSeenActivity struct {
+	Device    string `json:"deviceType"`
+	TitleID   string `json:"titleId"`
+	TitleName string `json:"titleName"`
+	Timestamp string `json:"timestamp"`
 }
 
 type activityStatusRequest struct {
