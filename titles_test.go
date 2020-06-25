@@ -4,7 +4,7 @@ import "testing"
 
 func TestTitles(t *testing.T) {
 	c := testClient(t)
-	titles, err := c.Titles("2745051201447500")
+	titles, err := c.Titles(testUserXID)
 	if err != nil {
 		t.Fatal(err)
 	}

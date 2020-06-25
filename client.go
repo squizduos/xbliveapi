@@ -84,6 +84,11 @@ func (c *Client) get(u string, v apiVersion, respBody interface{}) error {
 	}
 	defer resp.Body.Close()
 
+	// bodyBytes, _ := ioutil.ReadAll(resp.Body)
+	// log.Println(string(bodyBytes))
+	// resp.Body.Close() //  must close
+	// resp.Body = ioutil.NopCloser(bytes.NewBuffer(bodyBytes))
+
 	return json.NewDecoder(resp.Body).Decode(respBody)
 }
 
@@ -98,4 +103,10 @@ type Option func(*reqOptions)
 // provided time.
 func UpdatedSince(t time.Time) Option {
 	return func(ro *reqOptions) { ro.updatedSince = t }
+}
+
+// pagingInfo type defines a structure for decoding paging info from API
+type pagingInfo struct {
+	ContinuationToken *string `json:"continuationToken"`
+	TotalRecords      uint64  `json:"totalItems"`
 }

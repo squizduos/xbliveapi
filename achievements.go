@@ -36,11 +36,6 @@ type achievementsResponse struct {
 	PagingInfo   pagingInfo    `json:"pagingInfo"`
 }
 
-type pagingInfo struct {
-	ContinuationToken *string `json:"continuationToken"`
-	TotalRecords      uint64  `json:"totalRecords"`
-}
-
 // Achievements retrieves all achievements for the provided XID.
 func (c *Client) Achievements(xid string) ([]Achievement, error) {
 	queryParams := url.Values{"maxItems": {"1000"}, "orderBy": {"EndingSoon"}}

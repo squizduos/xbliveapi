@@ -4,7 +4,7 @@ import "testing"
 
 func TestActivity(t *testing.T) {
 	c := testClient(t)
-	activities, err := c.ActivityStatuses("2745051201447500")
+	activities, err := c.ActivityStatuses(testUserXID)
 	if err != nil {
 		t.Fatal(err)
 	}

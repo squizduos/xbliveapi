@@ -8,27 +8,26 @@ import (
 
 // GameDVR represents an individual user's game video record.
 type GameDVR struct {
-	XUID           int       `json:"xuid"`
-	ClipName       string    `json:"clipName"`
-	TitleID        string    `json:"titleId"`
-	TitleName      string    `json:"titleName"`
-	TitleData      string    `json:"titleData"`
-	GameClipLocale string    `json:"gameClipLocale"`
-	GameClipId     string    `json:"gameClipId"`
-	State          string    `json:"state"`
-	DateRecorded   time.Time `json:"dateRecorded"`
-	LastModified   time.Time `json:"lastModified"`
-	Caption        string    `json:"userCaption"`
-	Type           string    `json:"type"`
-	Source         string    `json:"source"`
-	Visibility     string    `json:"visibility"`
-	Duration       int       `json:"durationInSeconds"`
-	SCID           string    `json:"scid"`
-	Rating         int       `json:"rating"`
-	RatingCount    int       `json:"ratingCount"`
-	Views          int       `json:"views"`
-	Properties     string    `json:"systemProperties"`
-
+	XUID             string       `json:"xuid"`
+	ClipName         string       `json:"clipName"`
+	TitleID          int          `json:"titleId"`
+	TitleName        string       `json:"titleName"`
+	TitleData        string       `json:"titleData"`
+	GameClipLocale   string       `json:"gameClipLocale"`
+	GameClipID       string       `json:"gameClipId"`
+	State            string       `json:"state"`
+	DateRecorded     time.Time    `json:"dateRecorded"`
+	LastModified     time.Time    `json:"lastModified"`
+	Caption          string       `json:"userCaption"`
+	Type             string       `json:"type"`
+	Source           string       `json:"source"`
+	Visibility       string       `json:"visibility"`
+	Duration         int          `json:"durationInSeconds"`
+	SCID             string       `json:"scid"`
+	Rating           float64      `json:"rating"`
+	RatingCount      int          `json:"ratingCount"`
+	Views            int          `json:"views"`
+	Properties       string       `json:"systemProperties"`
 	SavedByUser      bool         `json:"savedByUser"`
 	AchievementID    string       `json:"achievementId"`
 	GreatestMomentID string       `json:"greatestMomentId"`
@@ -36,7 +35,7 @@ type GameDVR struct {
 	URIs             []GameDVRURI `json:"gameClipUris"`
 }
 
-// Rarity describes the rarity of a particular achievement.
+// GameDVRThumbnail describes the thumbnail of a particular game clip.
 type GameDVRThumbnail struct {
 	URI      string `json:"uri"`
 	FileSize int64  `json:"fileSize"`
@@ -53,11 +52,6 @@ type GameDVRURI struct {
 type gameDVRResponse struct {
 	GameDVRs   []GameDVR  `json:"gameClips"`
 	PagingInfo pagingInfo `json:"pagingInfo"`
-}
-
-type pagingInfo struct {
-	ContinuationToken *string `json:"continuationToken"`
-	TotalRecords      uint64  `json:"totalItems"`
 }
 
 // GameDVRs retrieves all game clips for the provided user XID.
@@ -77,7 +71,7 @@ func (c *Client) GameDVRs(xid string) ([]GameDVR, error) {
 	}
 
 	gamedvrs := make([]GameDVR, 0, resp.PagingInfo.TotalRecords)
-	gamedvrs = append(achievements, resp.GameDVRs...)
+	gamedvrs = append(gamedvrs, resp.GameDVRs...)
 	for resp.PagingInfo.ContinuationToken != nil {
 		queryParams.Set("continuationToken", *resp.PagingInfo.ContinuationToken)
 		u.RawQuery = queryParams.Encode()
@@ -86,7 +80,7 @@ func (c *Client) GameDVRs(xid string) ([]GameDVR, error) {
 		if err != nil {
 			return nil, err
 		}
-		gamedvrs = append(achievements, resp.GameDVRs...)
+		gamedvrs = append(gamedvrs, resp.GameDVRs...)
 	}
 	return gamedvrs, nil
 }

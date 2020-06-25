@@ -52,7 +52,7 @@ func (c *Client) Titles(xid string, opts ...Option) ([]Title, error) {
 	}
 
 	titles := make([]Title, 0, resp.PagingInfo.TotalRecords)
-	for _, t := range titles {
+	for _, t := range resp.Titles {
 		if t.LastPlayed.Before(reqOpts.updatedSince) {
 			return titles, nil
 		}

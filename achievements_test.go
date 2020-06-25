@@ -4,7 +4,7 @@ import "testing"
 
 func TestAchievements(t *testing.T) {
 	c := testClient(t)
-	achievements, err := c.Achievements("2533274792255104")
+	achievements, err := c.Achievements(testUserXID)
 	if err != nil {
 		t.Fatal(err)
 	}
