@@ -15,11 +15,11 @@ type DeviceActivity struct {
 }
 
 type TitleActivity struct {
-	ID        string `json:"id"`
-	Name      string `json:"name"`
-	Placement string `json:"placement"`
-	State     string `json:"state"`
-	Timestamp string `json:"timestamp"`
+	ID           string `json:"id"`
+	Name         string `json:"name"`
+	Placement    string `json:"placement"`
+	State        string `json:"state"`
+	LastModified string `json:"lastModified"`
 }
 
 type activityStatusRequest struct {
