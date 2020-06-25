@@ -1,6 +1,9 @@
 package xbliveapi
 
-import "net/url"
+import (
+	"net/url"
+	"time"
+)
 
 // ActivityStatus describes the current status of a Xbox LIVE gamertag.
 type ActivityStatus struct {
@@ -24,10 +27,10 @@ type TitleActivity struct {
 }
 
 type LastSeenActivity struct {
-	Device    string `json:"deviceType"`
-	TitleID   string `json:"titleId"`
-	TitleName string `json:"titleName"`
-	Timestamp string `json:"timestamp"`
+	Device    string    `json:"deviceType"`
+	TitleID   string    `json:"titleId"`
+	TitleName string    `json:"titleName"`
+	Timestamp time.Time `json:"timestamp"`
 }
 
 type activityStatusRequest struct {
